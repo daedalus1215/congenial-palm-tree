@@ -9,3 +9,9 @@ services:
       resources:
         limits:
           memory: 700m
+    networks:
+      - currency-network
+
+
+networks:
+  currency-network:
