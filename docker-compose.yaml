@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   currency-exchange:
-    image: in28min/mmv3-currency-exchange-service:0.0.12-SNAPSHOT
+    image: daedalus1215/currency-exchange-service:latest
     ports:
       - "8000:8000"
     deploy:
@@ -11,7 +11,32 @@ services:
           memory: 700m
     networks:
       - currency-network
+    depends_on:
+      - naming-service
 
+  currency-conversion:
+    image: daedalus1215/currency-conversion-service:latest
+    ports:
+      - "8101:8101"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - currency-network
+    depends_on:
+      - naming-service
+      
+  naming-service:
+    image: in28min/mmv2-naming-server:0.0.1-SNAPSHOT
+    ports:
+      - "8761:8761"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - currency-network
 
 networks:
   currency-network:
