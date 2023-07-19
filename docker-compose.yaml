@@ -37,6 +37,24 @@ services:
     environment:
       - EUREKA.CLIENT.SERVICEURL.DEFAULTZONE=http://naming-server:8761/eureka  
       
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.api-gateway
+    ports: 
+      - "8765:8765"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - currency-network 
+    depends_on:
+      - naming-server
+    environment:
+      - EUREKA.CLIENT.SERVICEURL.DEFAULTZONE=http://naming-server:8761/eureka  
+    
   naming-server:
     build: 
       context: .
